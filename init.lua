@@ -247,6 +247,8 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+
+vim.g.rustc_path = "/usr/bin/rustc"
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -380,7 +382,7 @@ local on_attach = function(_, bufnr)
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
   --
-  -- In this case, we create a function that lets us more easily define mappings specific
+  -- In this cffe, we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
@@ -426,7 +428,7 @@ end
 local servers = {
   clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
 
@@ -515,17 +517,8 @@ cmp.setup {
     { name = 'calc' },                                       -- source for math calculation
   },
 }
-
--- local rt = require("rust-tools")
---rt.setup({
---  server = {
---    on_attach = function(_, bufnr)
-      -- Hover actions
---      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
---      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
---    end,
---  },
---})
+-- vim.g.rustc.path = '/usr/bin/rustc'
+vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", {silent = true })
+vim.keymap.set('n', 'Q', ":q!<CR>", {silent = true })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
