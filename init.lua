@@ -520,5 +520,7 @@ cmp.setup {
 -- vim.g.rustc.path = '/usr/bin/rustc'
 vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", {silent = true })
 vim.keymap.set('n', 'Q', ":q!<CR>", {silent = true })
+vim.keymap.set('n', 'W', ":wq!<CR>", {silent = true })
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
