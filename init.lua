@@ -426,7 +426,9 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  clangd = {},
+  clangd = {
+    vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>ClangdSwitchSourceHeader<CR>', { noremap = true, silent = true })
+  },
   -- gopls = {},
   pyright = {},
   -- rust_analyzer = {},
@@ -518,9 +520,9 @@ cmp.setup {
   },
 }
 -- vim.g.rustc.path = '/usr/bin/rustc'
-vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", {silent = true })
-vim.keymap.set('n', 'Q', ":q!<CR>", {silent = true })
-vim.keymap.set('n', 'W', ":wq!<CR>", {silent = true })
+vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", { silent = true })
+vim.keymap.set('n', 'Q', ":q!<CR>", { silent = true })
+vim.keymap.set('n', 'W', ":wq!<CR>", { silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

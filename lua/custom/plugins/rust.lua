@@ -2,6 +2,7 @@
 return {
   'rust-lang/rust.vim',
   'simrat39/rust-tools.nvim',
+  'lvimuser/lsp-inlayhints.nvim',
   config = function()
     require('rust-tools').setup {
       server = {
