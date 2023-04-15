@@ -5,6 +5,10 @@ return {
     'mfussenegger/nvim-dap',
     'ldelossa/nvim-dap-projects',
     'theHamsta/nvim-dap-virtual-text',
+    'Pocco81/DAPInstall.nvim',
+  },
+  wants = {
+    'nvim-dap-virtual-text',
   },
   config = function()
     require('nvim-dap-projects').config_paths = { "nvim-dap.lua" }

@@ -128,7 +128,15 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      require('onedark').setup {
+        style = 'dark',
+        colors = {
+          red = "#dddeeb",
+
+        },
+      }
+      -- vim.cmd.colorscheme 'onedark'
+      require('onedark').load()
     end,
   },
 
@@ -187,7 +195,7 @@ require('lazy').setup({
     end,
   },
 
-
+  { 'mfussenegger/nvim-lint' },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -307,7 +315,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'toml', 'tsx', 'typescript', 'help', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'toml', 'tsx', 'typescript', 'help', 'vim', 'proto' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -429,6 +437,7 @@ local servers = {
   clangd = {
     vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>ClangdSwitchSourceHeader<CR>', { noremap = true, silent = true })
   },
+  bufls = {},
   -- gopls = {},
   pyright = {},
   -- rust_analyzer = {},
@@ -523,6 +532,19 @@ cmp.setup {
 vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", { silent = true })
 vim.keymap.set('n', 'Q', ":q!<CR>", { silent = true })
 vim.keymap.set('n', 'W', ":wq!<CR>", { silent = true })
+
+-- common key bindings
+vim.keymap.set('n', 'hh', ':nohlsearch<CR>', { silent = true })
+
+
+-- linter
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
