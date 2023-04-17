@@ -131,7 +131,7 @@ require('lazy').setup({
       require('onedark').setup {
         style = 'dark',
         colors = {
-          red = "#dddeeb",
+          red = "#a2a2a3",
 
         },
       }
