@@ -255,6 +255,8 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- set font size
+vim.o.guifont = 12
 
 vim.g.rustc_path = "/usr/bin/rustc"
 -- [[ Basic Keymaps ]]
@@ -529,10 +531,11 @@ cmp.setup {
   },
 }
 -- vim.g.rustc.path = '/usr/bin/rustc'
-vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", { silent = true })
-vim.keymap.set('n', 'Q', ":q!<CR>", { silent = true })
-vim.keymap.set('n', 'W', ":wq!<CR>", { silent = true })
-
+vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", { silent = true, desc = "Cargo run" })
+vim.keymap.set('n', 'Q', ":q!<CR>", { silent = true, desc = "Close file"})
+vim.keymap.set('n', 'W', ":wq!<CR>", { silent = true, desc = "Save and close file" })
+-- install neovim-doxygentoolkit
+vim.keymap.set('n', 'dox', ":Dox<CR>", { silent = true, desc = "Doxygen support - Install neovim-doxygentoolkit" })
 -- common key bindings
 vim.keymap.set('n', 'hh', ':nohlsearch<CR>', { silent = true })
 
