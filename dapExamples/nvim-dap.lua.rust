@@ -1,0 +1,15 @@
+local dap = require('dap')
+dap.adapters.rust = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode',
+  name = 'lldb'
+}
+
+dap.configurations.rust = {
+  {
+    name = 'Launch',
+    type = 'rust',
+    request = "launch",
+     program = "${workspaceFolder}/target/debug/runCmd",
+  },
+}
