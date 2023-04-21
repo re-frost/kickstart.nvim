@@ -1,3 +1,4 @@
+-- install codelldb
 local dap = require('dap')
 
 dap.adapters.cpp = {
