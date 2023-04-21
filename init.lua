@@ -197,6 +197,7 @@ require('lazy').setup({
 
   { 'mfussenegger/nvim-lint' },
 
+  --  { 'mfussenegger/nvim-dap-python' },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -548,6 +549,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 })
 
 
-
+-- Open neotree on start
+vim.cmd('autocmd VimEnter * Neotree')
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
