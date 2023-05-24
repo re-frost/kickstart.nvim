@@ -130,10 +130,10 @@ require('lazy').setup({
     config = function()
       require('onedark').setup {
         style = 'dark',
-        colors = {
-          red = "#a2a2a3",
-
-        },
+        --   colors = {
+        --     red = "#a2a2a3",
+        --
+        --   },
       }
       -- vim.cmd.colorscheme 'onedark'
       require('onedark').load()
@@ -198,12 +198,14 @@ require('lazy').setup({
 
   { 'mfussenegger/nvim-lint' },
 
+  { 'onsails/lspkind.nvim' },
+
   --  { 'mfussenegger/nvim-dap-python' },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.autoformat',
+  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -215,6 +217,8 @@ require('lazy').setup({
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
   { import = 'custom.plugins' },
 }, {})
+
+vim.o.relativenumber = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -252,7 +256,7 @@ vim.o.timeout = true
 vim.o.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = 'menu,menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -448,6 +452,7 @@ local servers = {
   clangd = {
     vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>ClangdSwitchSourceHeader<CR>', { noremap = true, silent = true })
   },
+  cmake = {},
   bufls = {},
   -- gopls = {},
   pyright = {},
@@ -493,6 +498,15 @@ mason_lspconfig.setup_handlers {
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
+local lspkind = require('lspkind')
+
+lspkind.init {
+  symbol_map = {
+    Copilot = "",
+  },
+}
+
+
 luasnip.config.setup {}
 
 cmp.setup {
@@ -501,10 +515,15 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
+    ["<C-e>"] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -528,6 +547,28 @@ cmp.setup {
       end
     end, { 'i', 's' }),
   },
+  formatting = {
+    -- Youtube: How to set up nice formatting for your sources.
+    format = lspkind.cmp_format {
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+        gh_issues = "[issues]",
+        tn = "[TabNine]",
+        eruby = "[erb]",
+      },
+    },
+  },
+  experimental = {
+    -- I like the new menu better! Nice work hrsh7th
+    native_menu = false,
+    -- Let's play with this for a day or two
+    ghost_text = false,
+  },
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
@@ -541,7 +582,7 @@ cmp.setup {
 }
 -- vim.g.rustc.path = '/usr/bin/rustc'
 vim.keymap.set('n', '<leader><F5>', ":Cargo run<CR>", { silent = true, desc = "Cargo run" })
-vim.keymap.set('n', 'Q', ":q!<CR>", { silent = true, desc = "Close file"})
+vim.keymap.set('n', 'Q', ":q!<CR>", { silent = true, desc = "Close file" })
 vim.keymap.set('n', 'W', ":wq!<CR>", { silent = true, desc = "Save and close file" })
 -- install neovim-doxygentoolkit
 vim.keymap.set('n', 'dox', ":Dox<CR>", { silent = true, desc = "Doxygen support - Install neovim-doxygentoolkit" })
